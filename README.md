@@ -2,6 +2,9 @@
 
 **Created for educational purposes**
 
+> The minimum functionality has been implemented.
+> GPU is not required.
+
 ## Tech
 
 - [EasyOCR] library used for text recognition on images
@@ -26,6 +29,10 @@ pip install -r requirements.txt
 ``` bash
 python main.py
 ```
+
+- Select an image on which you want to recognize text
+- If necessary, select the option to save the result to a file
+- Start the recognition process and wait for it to finish
 
 
 
