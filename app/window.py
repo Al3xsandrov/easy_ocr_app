@@ -7,7 +7,9 @@ from app.OCRThread import *
 
 
 class Window(QMainWindow):
-    def __init__(self):
+    """A class representing the application window."""
+    def __init__(self) -> None:
+        """Initializes the main window."""
         super(Window, self).__init__()
         self.ui = Ui_mainWindow()
         self.ui.setupUi(self)
@@ -24,20 +26,27 @@ class Window(QMainWindow):
 
         self.threads = []
 
-    def setButtonsStatus(self, status):
+    def setButtonsStatus(self, status: bool) -> None:
+        """Enable or disable buttons based on the provided status.
+
+        Args:
+            status (bool): The status to set for buttons.
+        """
         self.btn_run.setEnabled(status)
         self.file.setEnabled(status)
         self.file_path.setEnabled(status)
         self.as_txt.setEnabled(status)
 
-    def getFile(self):
+    def getFile(self) -> None:
+        """Opens a file dialog to get the image path."""
         fname = QFileDialog.getOpenFileName(self, "Open Image", "", "Images (*.png *.xpm *.jpg *.bmp *.jpeg)")
 
         if fname and fname[0] != '':
             self.file_path.setText(fname[0])
             self.btn_run.setEnabled(True)
 
-    def onRun(self):
+    def onRun(self) -> None:
+        """Initiates OCR processing when the run button is clicked."""
         self.setButtonsStatus(False)
         self.progressBar.setRange(0, 0)
 
@@ -47,7 +56,12 @@ class Window(QMainWindow):
         ocrThread.start()
         self.threads.append(ocrThread)
 
-    def onOCRComplete(self, text):
+    def onOCRComplete(self, text: str) -> None:
+        """Handles OCR processing completion.
+
+        Args:
+            text (str): The extracted text.
+        """
         self.result_box.setText(text)
 
         if self.as_txt.isChecked():
@@ -60,7 +74,12 @@ class Window(QMainWindow):
         self.setButtonsStatus(True)
         self.progressBar.setRange(0, 100)
 
-    def closeEvent(self, event):
+    def closeEvent(self, event) -> None:
+        """Overrides the close event of the window.
+
+        Args:
+            event: The close event.
+        """
         for thread in self.threads:
             thread.terminate()
         event.accept()
